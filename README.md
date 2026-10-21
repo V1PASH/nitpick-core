@@ -197,6 +197,10 @@ export PREFECT_API_URL=http://prefect-server:4200/api
 Either way the session records its flow run id, so a conversation can be
 traced back to the dispatch that started it.
 
+`PREFECT_HOME` is resolved to an absolute path and exported, so the
+ephemeral server subprocess finds the same state the service does — a
+service should not depend on whose home directory it runs under.
+
 ---
 
 ## Configuration
@@ -215,7 +219,7 @@ traced back to the dispatch that started it.
 | `NITPICK_CORE_DEFAULT_ROOM` | `demo` | The room a task joins when it does not name one |
 | `NITPICK_CORE_WEB_ROOT` | nitpick's client | The browser client to serve |
 | `PREFECT_API_URL` | unset | An external Prefect server |
-| `PREFECT_HOME` | `.prefect` | Where Prefect keeps its state |
+| `PREFECT_HOME` | `.prefect` | Where Prefect keeps its state, relative to the working directory |
 
 ---
 

@@ -86,6 +86,12 @@ def create_app(
     settings = config or load_config()
     agent_runtime = runtime or get_runtime(settings)
 
+    # Configure Prefect before anything else touches it, so its state
+    # lives where this service can find it.
+    from .flows import prefect_settings
+
+    prefect_settings(settings)
+
     # The signaling server shares the runtime's room manager, so every
     # session is visible on the same socket.
     signaling = SignalingServer(agent_runtime.manager)

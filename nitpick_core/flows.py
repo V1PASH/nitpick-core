@@ -21,6 +21,8 @@ Prefect runs an ephemeral local server, so the service is self-contained.
 from __future__ import annotations
 
 import logging
+import os
+from pathlib import Path
 from typing import Any
 
 from .config import Config
@@ -41,6 +43,12 @@ def prefect_settings(config: Config | None = None) -> None:
     With ``PREFECT_API_URL`` set, Prefect talks to that server. Without it,
     Prefect uses its ephemeral local server, which keeps the service
     self-contained.
+
+    The settings are applied as **environment variables**, not just as
+    Prefect settings: the ephemeral server runs in a subprocess, and it
+    only sees the configuration the environment carries. A relative home
+    is also made absolute — a service should not depend on its working
+    directory.
     """
     global _configured
     if _configured:
@@ -55,15 +63,25 @@ def prefect_settings(config: Config | None = None) -> None:
         log.warning("prefect is not installed — flows will not be traced")
         return
 
+    if config.prefect_api_url:
+        os.environ["PREFECT_API_URL"] = config.prefect_api_url
+
+    if config.prefect_home:
+        home = Path(config.prefect_home).expanduser().resolve()
+        os.environ["PREFECT_HOME"] = str(home)
+        try:
+            home.mkdir(parents=True, exist_ok=True)
+        except OSError:  # pragma: no cover - best effort
+            log.debug("could not create the prefect home", exc_info=True)
+
     overrides: dict[str, Any] = {}
     if config.prefect_api_url:
         overrides["PREFECT_API_URL"] = config.prefect_api_url
     if config.prefect_home:
-        overrides["PREFECT_HOME"] = config.prefect_home
+        overrides["PREFECT_HOME"] = os.environ["PREFECT_HOME"]
 
     if overrides:
         log.info("prefect configured: %s", overrides)
-        # The settings are applied for the process.
         try:
             temporary_settings(overrides=overrides).__enter__()
         except Exception:  # pragma: no cover - best effort
