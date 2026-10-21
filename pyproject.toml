@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nitpick-core"
+version = "0.1.0"
+description = "The agent runtime for nitpick — loads agent definitions from minidb, dispatches them through Prefect, and serves voice rooms."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD-2-Clause" }
+authors = [{ name = "Arsh0922" }]
+keywords = ["voice", "agent", "prefect", "minidb", "webrtc", "orchestration"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+dependencies = [
+    # The framework is not on PyPI — the name `nitpick` belongs to an
+    # unrelated package — so it comes straight from the repository.
+    "nitpick @ git+https://github.com/V1PASH/nitpick.git",
+    "prefect>=3.0",
+    "httpx>=0.26",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "pytest-timeout>=2.3"]
+# The minidb document store the agent registry lives in. Install it from
+# the sibling project, or from PyPI if it has been published.
+minidb = ["minidb>=0.6"]
+
+[project.scripts]
+nitpick-core = "nitpick_core.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["nitpick_core*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "slow: tests that start a Prefect server and take a few seconds",
+]
