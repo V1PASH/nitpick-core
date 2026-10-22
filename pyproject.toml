@@ -21,9 +21,10 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio :: Speech",
 ]
 dependencies = [
-    # The framework is not on PyPI — the name `nitpick` belongs to an
-    # unrelated package — so it comes straight from the repository.
-    "nitpick @ git+https://github.com/V1PASH/nitpick.git",
+    # The framework is not on PyPI yet — the name `nitpick` belongs to an
+    # unrelated package, so the distribution is called `nitpick-voice` — so
+    # it comes straight from the repository for now.
+    "nitpick-voice @ git+https://github.com/V1PASH/nitpick.git",
     "prefect>=3.0",
     "httpx>=0.26",
 ]

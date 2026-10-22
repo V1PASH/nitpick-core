@@ -270,14 +270,20 @@ flow.
 
 ## Notes
 
-* **The `nitpick` name is taken on PyPI.** The framework is installed from
-  its GitHub repository; `nitpick-core` itself is free to publish.
+* **The framework publishes as `nitpick-voice`.** The name `nitpick` on
+  PyPI belongs to an unrelated package, so the distribution was renamed.
+  **The import name is still `nitpick`** — `from nitpick import Agent`. It
+  is installed from the repository for now, and nitpick-core depends on
+  it that way.
 * **Providers.** nitpick speaks the OpenAI wire format, plus Deepgram and
   Sarvam for speech-to-text. An Anthropic model needs a `base_url` in its
   config, pointing at an OpenAI-compatible gateway.
 * **The Django service is not modified.** nitpick-core reads the same
   database file, so the two agree without a network hop. Pointing
   `MINIDB_PATH` at the same file is the whole integration.
+* **The rooms and signaling layer came from `project-0`.** That prototype
+  is archived; nitpick carries the architecture with several fixes applied
+  (see nitpick's `docs/architecture.md`).
 
 ## License
 
