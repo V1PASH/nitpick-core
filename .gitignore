@@ -9,3 +9,6 @@ venv/
 .pytest_cache/
 .prefect/
 .DS_Store
+
+# go-task scratch directory.
+.task/
