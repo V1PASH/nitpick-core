@@ -223,6 +223,30 @@ service should not depend on whose home directory it runs under.
 
 ---
 
+## Publishing
+
+The package is built and published with [go-task](https://taskfile.dev):
+
+```bash
+task                 # list the tasks
+task test            # run the tests
+task build           # build the wheel and the sdist
+task check           # the pre-publish checks on their own
+task publish         # build, check and upload to PyPI
+task publish-test    # upload to TestPyPI instead
+task release         # tag the current version and push the tag
+```
+
+`task publish` refuses to run unless the working tree is clean, the version
+in `pyproject.toml` matches the package's `__version__`, the version is not
+already on PyPI, and the artefacts pass `twine check --strict`.
+
+There is also a `publish` GitHub workflow that uses PyPI's **trusted
+publishing**, so a release can be published from CI with no API token
+stored anywhere.
+
+---
+
 ## How a session runs
 
 ```
