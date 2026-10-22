@@ -64,8 +64,9 @@ class Registry:
                     from minidb import Database
                 except ImportError as exc:  # pragma: no cover - import guard
                     raise RegistryError(
-                        "minidb is not installed. Install it with: "
-                        "pip install nitpick-core[minidb]"
+                        "minidb is not installed. It comes with nitpick-core, "
+                        "but it can also be installed on its own: "
+                        "pip install minidb-db"
                     ) from exc
                 self._database = Database(self.config.minidb_path)
             return self._database

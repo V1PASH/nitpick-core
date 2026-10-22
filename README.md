@@ -45,7 +45,6 @@ export OPENAI_API_KEY=sk-...
 
 nitpick-core serve --port 8100
 ```
-
 ```bash
 # What is in the registry?
 nitpick-core agents
@@ -318,11 +317,9 @@ flow.
 
 ## Notes
 
-* **The framework publishes as `nitpick-voice`.** The name `nitpick` on
+* **The framework is on PyPI as `nitpick-voice`.** The name `nitpick` on
   PyPI belongs to an unrelated package, so the distribution was renamed.
-  **The import name is still `nitpick`** — `from nitpick import Agent`. It
-  is installed from the repository for now, and nitpick-core depends on
-  it that way.
+  **The import name is still `nitpick`** — `from nitpick import Agent`.
 * **Providers.** nitpick speaks the OpenAI wire format, plus Deepgram and
   Sarvam for speech-to-text. An Anthropic model needs a `base_url` in its
   config, pointing at an OpenAI-compatible gateway.

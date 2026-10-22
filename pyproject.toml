@@ -21,10 +21,12 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio :: Speech",
 ]
 dependencies = [
-    # The framework is not on PyPI yet — the name `nitpick` belongs to an
-    # unrelated package, so the distribution is called `nitpick-voice` — so
-    # it comes straight from the repository for now.
-    "nitpick-voice @ git+https://github.com/V1PASH/nitpick.git",
+    # The framework, from PyPI. It used to come straight from the
+    # repository, but PyPI does not allow a direct URL dependency in
+    # published metadata.
+    "nitpick-voice>=0.2.0",
+    # The document store the agent registry lives in.
+    "minidb-db>=0.7.0",
     "prefect>=3.0",
     "httpx>=0.26",
 ]
@@ -38,9 +40,6 @@ dev = [
     "twine>=6.0",
     "pyflakes>=3.0",
 ]
-# The minidb document store the agent registry lives in. Install it from
-# the sibling project, or from PyPI if it has been published.
-minidb = ["minidb>=0.6"]
 
 [project.scripts]
 nitpick-core = "nitpick_core.cli:main"
