@@ -9,6 +9,7 @@ Prefect, and serves the voice rooms so people can talk to them.
 from __future__ import annotations
 
 from .builder import AgentSpec, build_agent, build_spec
+from .client import CoreClient, CoreError
 from .config import Config, load_config
 from .errors import (
     AgentNotFound,
@@ -30,6 +31,8 @@ __all__ = [
     "AgentSpec",
     "BuildError",
     "Config",
+    "CoreClient",
+    "CoreError",
     "DispatchError",
     "ModelNotFound",
     "NitpickCoreError",

@@ -112,6 +112,30 @@ The agent's own `config` may carry pipeline settings:
 
 ---
 
+## The client
+
+A typed async client, so another service can dispatch agents with one
+import:
+
+```python
+from nitpick_core import CoreClient
+
+async with CoreClient("http://127.0.0.1:8100") as client:
+    session = await client.dispatch("acme-support", room_id="demo")
+    print(session["id"], session["status"])
+```
+
+| Method | Purpose |
+|---|---|
+| `dispatch(handle, *, room_id=None, overrides=None, metadata=None)` | Queue an agent to run |
+| `session(session_id)` | One session |
+| `sessions()` | Every session |
+| `agents()` | The registry the service is running from |
+| `agent(handle)` | One agent, with its models resolved |
+| `health()` | Is the service up? |
+
+---
+
 ## The HTTP API
 
 ### `POST /tasks` — dispatch a task
